@@ -7,44 +7,86 @@
 
 import UIKit
 
+
 class ViewController: UIViewController {
-    
-    @IBOutlet weak var imageView: UIImageView!
-    
+   
+    @IBOutlet weak var collectionView: UICollectionView!
+    var collectionViewFlowLayout : UICollectionViewFlowLayout!
+    let cellIdentifier = "DogPicsCollectionViewCell"
+    let enlargeDogPicSegue = "enlargeDogPicSegue"
+    var imageUrl : String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        getDogPics()
+    
+        collectionView.dataSource = self
+        collectionView.delegate = self
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        setUpCollectionViewItemSize()
     }
     
-    func getDogPics(){
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("imageUrl\(imageUrl)")
+        if segue.identifier == enlargeDogPicSegue{
+            if let vc = segue.destination as? DogImageViewerViewController{
+                vc.imageView.downloaded(from: imageUrl)
+            }
+        }
+    }
+    
+    func setUpCollectionViewItemSize(){
+        if collectionViewFlowLayout == nil{
+            let numberofItemPerRow : CGFloat = 2
+        let minimumLineSpacing: CGFloat = 1
+        let minimumInteritemSpacing: CGFloat = 1
+            let width = (collectionView.frame.width - (numberofItemPerRow - 1) * minimumInteritemSpacing) / numberofItemPerRow
+            let height = width
+            collectionViewFlowLayout = UICollectionViewFlowLayout()
+            collectionViewFlowLayout.itemSize = CGSize(width: width, height: height)
+            collectionViewFlowLayout.sectionInset = UIEdgeInsets.zero
+            collectionViewFlowLayout.scrollDirection = .vertical
+            collectionViewFlowLayout.minimumLineSpacing = minimumLineSpacing
+            collectionViewFlowLayout.minimumInteritemSpacing = minimumInteritemSpacing
+            collectionView.setCollectionViewLayout(collectionViewFlowLayout, animated: true)
+            
+        }
+    }
+    
+}
+
+extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
+ func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 50
+    }
+    
+func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! DogPicsCollectionViewCell
         let jsonUrl = "https://dog.ceo/api/breeds/image/random/50"
-        guard let url = URL(string: jsonUrl) else
-        { return }
-        URLSession.shared.dataTask(with: url) { (data, response, error ) in
+        let url = URL(string: jsonUrl)
+        URLSession.shared.dataTask(with: url!) { [self] (data, response, error ) in
             guard let data = data else{
                 return
             }
             do{
-                let course = try JSONDecoder().decode(DogPics.self, from: data)
-                for index in 0...49{
-                    let dogUrl = course.message[index]
-                    print(dogUrl)
-                    let imageUrl = URL(string: dogUrl)
-                    self.imageView.downloaded(from: imageUrl!)
-                }
-                
-            } catch let jsonErr{
+                let dogImage = try JSONDecoder().decode(DogPics.self, from: data)
+                     imageUrl = dogImage.message[0]
+                    cell.dogImageView.downloaded(from: imageUrl)
+        }
+             catch let jsonErr{
                 print(jsonErr)
             }
             
         }.resume()
-        
+        return cell
     }
-}
-
-struct DogPics: Codable {
-    let message: [String]
+    
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        performSegue(withIdentifier: enlargeDogPicSegue, sender: self)
+    }
 }
 
 extension UIImageView {
@@ -68,3 +110,4 @@ extension UIImageView {
         downloaded(from: url, contentMode: mode)
     }
 }
+

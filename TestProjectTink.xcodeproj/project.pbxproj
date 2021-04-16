@@ -15,6 +15,9 @@
 		E23FB3FB26263CA600F91CAE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E23FB3F926263CA600F91CAE /* LaunchScreen.storyboard */; };
 		E23FB40626263CA700F91CAE /* TestProjectTinkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23FB40526263CA700F91CAE /* TestProjectTinkTests.swift */; };
 		E23FB41126263CA700F91CAE /* TestProjectTinkUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23FB41026263CA700F91CAE /* TestProjectTinkUITests.swift */; };
+		E25483282627A69A0026A75B /* DogPicsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25483272627A69A0026A75B /* DogPicsCollectionViewCell.swift */; };
+		E254837126290B280026A75B /* DogImageViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E254837026290B280026A75B /* DogImageViewerViewController.swift */; };
+		E254837C26290C3B0026A75B /* DogPics.swift in Sources */ = {isa = PBXBuildFile; fileRef = E254837B26290C3B0026A75B /* DogPics.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +52,9 @@
 		E23FB40C26263CA700F91CAE /* TestProjectTinkUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestProjectTinkUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E23FB41026263CA700F91CAE /* TestProjectTinkUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestProjectTinkUITests.swift; sourceTree = "<group>"; };
 		E23FB41226263CA700F91CAE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E25483272627A69A0026A75B /* DogPicsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogPicsCollectionViewCell.swift; sourceTree = "<group>"; };
+		E254837026290B280026A75B /* DogImageViewerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogImageViewerViewController.swift; sourceTree = "<group>"; };
+		E254837B26290C3B0026A75B /* DogPics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogPics.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +105,7 @@
 		E23FB3ED26263CA200F91CAE /* TestProjectTink */ = {
 			isa = PBXGroup;
 			children = (
+				E25483272627A69A0026A75B /* DogPicsCollectionViewCell.swift */,
 				E23FB3EE26263CA200F91CAE /* AppDelegate.swift */,
 				E23FB3F026263CA200F91CAE /* SceneDelegate.swift */,
 				E23FB3F226263CA200F91CAE /* ViewController.swift */,
@@ -106,6 +113,8 @@
 				E23FB3F726263CA600F91CAE /* Assets.xcassets */,
 				E23FB3F926263CA600F91CAE /* LaunchScreen.storyboard */,
 				E23FB3FC26263CA600F91CAE /* Info.plist */,
+				E254837026290B280026A75B /* DogImageViewerViewController.swift */,
+				E254837B26290C3B0026A75B /* DogPics.swift */,
 			);
 			path = TestProjectTink;
 			sourceTree = "<group>";
@@ -260,6 +269,9 @@
 			files = (
 				E23FB3F326263CA200F91CAE /* ViewController.swift in Sources */,
 				E23FB3EF26263CA200F91CAE /* AppDelegate.swift in Sources */,
+				E25483282627A69A0026A75B /* DogPicsCollectionViewCell.swift in Sources */,
+				E254837C26290C3B0026A75B /* DogPics.swift in Sources */,
+				E254837126290B280026A75B /* DogImageViewerViewController.swift in Sources */,
 				E23FB3F126263CA200F91CAE /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
