@@ -8,5 +8,6 @@
 import Foundation
 
 struct DogPics : Codable {
+    
     let message : [String]
 }

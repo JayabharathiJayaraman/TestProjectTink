@@ -9,20 +9,21 @@ import UIKit
 
 
 class ViewController: UIViewController {
-   
+    
     @IBOutlet weak var collectionView: UICollectionView!
     var collectionViewFlowLayout : UICollectionViewFlowLayout!
     let cellIdentifier = "DogPicsCollectionViewCell"
     let enlargeDogPicSegue = "enlargeDogPicSegue"
     var imageUrl : String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-    
+        
         collectionView.dataSource = self
         collectionView.delegate = self
     }
-
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         setUpCollectionViewItemSize()
@@ -31,17 +32,16 @@ class ViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         print("imageUrl\(imageUrl)")
         if segue.identifier == enlargeDogPicSegue{
-            if let vc = segue.destination as? DogImageViewerViewController{
-                vc.imageView.downloaded(from: imageUrl)
-            }
+            let vc = segue.destination as! DogImageViewerViewController
+            vc.dogImageUrl = self.imageUrl
         }
     }
     
     func setUpCollectionViewItemSize(){
         if collectionViewFlowLayout == nil{
             let numberofItemPerRow : CGFloat = 2
-        let minimumLineSpacing: CGFloat = 1
-        let minimumInteritemSpacing: CGFloat = 1
+            let minimumLineSpacing: CGFloat = 1
+            let minimumInteritemSpacing: CGFloat = 1
             let width = (collectionView.frame.width - (numberofItemPerRow - 1) * minimumInteritemSpacing) / numberofItemPerRow
             let height = width
             collectionViewFlowLayout = UICollectionViewFlowLayout()
@@ -59,11 +59,11 @@ class ViewController: UIViewController {
 
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
- func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 50
     }
     
-func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! DogPicsCollectionViewCell
         let jsonUrl = "https://dog.ceo/api/breeds/image/random/50"
         let url = URL(string: jsonUrl)
@@ -73,18 +73,18 @@ func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath:
             }
             do{
                 let dogImage = try JSONDecoder().decode(DogPics.self, from: data)
-                     imageUrl = dogImage.message[0]
-                    cell.dogImageView.downloaded(from: imageUrl)
-        }
-             catch let jsonErr{
+                imageUrl = dogImage.message[indexPath.row]
+                print("dog:\(imageUrl)")
+                cell.dogImageView.downloaded(from: imageUrl)
+            }
+            catch let jsonErr{
                 print(jsonErr)
             }
-            
         }.resume()
         return cell
     }
     
-  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         performSegue(withIdentifier: enlargeDogPicSegue, sender: self)
     }
 }
