@@ -11,10 +11,10 @@ class DogImageViewerViewController: UIViewController {
     
     @IBOutlet weak var pugTitleLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
-    
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var dogDescriptionTextField: UITextView!
     public var dogImageUrl: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
